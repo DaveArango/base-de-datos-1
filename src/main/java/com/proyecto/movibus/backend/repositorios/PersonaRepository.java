@@ -10,31 +10,46 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
 
-    @Query(value = "SELECT * FROM public.persona", nativeQuery = true)
-    List<Persona> listar();
-
-    @Query(value = "SELECT * FROM public.persona WHERE id = :id", nativeQuery = true)
-    Optional<Persona> buscarPorId(@Param("id") Integer id);
-
+    // CREATE
     @Modifying
     @Transactional
     @Query(value = """
-        INSERT INTO persona (
-            id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
-            fecha_nacimiento, fecha_registro, username, password, correo,
-            estado, codigo_telefono, codigo_tipo_documento
-        ) VALUES (
-            :id, :primerNombre, :segundoNombre, :primerApellido, :segundoApellido,
-            :fechaNacimiento, :fechaRegistro, :username, :password, :correo,
-            :estado, :codigoTelefono, :codigoTipoDocumento
+        INSERT INTO public.persona(
+            id,
+            primer_nombre,
+            segundo_nombre,
+            primer_apellido,
+            segundo_apellido,
+            fecha_nacimiento,
+            fecha_registro,
+            username,
+            password,
+            correo,
+            estado,
+            codigo_telefono,
+            codigo_tipo_documento
         )
-    """, nativeQuery = true)
-    void insertar(
+        VALUES(
+            :id,
+            :primerNombre,
+            :segundoNombre,
+            :primerApellido,
+            :segundoApellido,
+            :fechaNacimiento,
+            :fechaRegistro,
+            :username,
+            :password,
+            :correo,
+            :estado,
+            :codigoTelefono,
+            :codigoTipoDocumento
+        )
+        """, nativeQuery = true)
+    void insertarPersona(
             @Param("id") Integer id,
             @Param("primerNombre") String primerNombre,
             @Param("segundoNombre") String segundoNombre,
@@ -50,11 +65,21 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
             @Param("codigoTipoDocumento") Integer codigoTipoDocumento
     );
 
+    // READ ALL
+    @Query(value = "SELECT * FROM public.persona", nativeQuery = true)
+    List<Persona> listarPersonas();
+
+    // READ BY ID
+    @Query(value = "SELECT * FROM public.persona WHERE id = :id", nativeQuery = true)
+    Persona buscarPersonaPorId(@Param("id") Integer id);
+
+    // UPDATE
     @Modifying
     @Transactional
     @Query(value = """
-        UPDATE persona
-        SET primer_nombre = :primerNombre,
+        UPDATE public.persona
+        SET
+            primer_nombre = :primerNombre,
             segundo_nombre = :segundoNombre,
             primer_apellido = :primerApellido,
             segundo_apellido = :segundoApellido,
@@ -67,8 +92,8 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
             codigo_telefono = :codigoTelefono,
             codigo_tipo_documento = :codigoTipoDocumento
         WHERE id = :id
-    """, nativeQuery = true)
-    void actualizar(
+        """, nativeQuery = true)
+    void actualizarPersona(
             @Param("id") Integer id,
             @Param("primerNombre") String primerNombre,
             @Param("segundoNombre") String segundoNombre,
@@ -84,8 +109,9 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
             @Param("codigoTipoDocumento") Integer codigoTipoDocumento
     );
 
+    // DELETE
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM persona WHERE id = :id", nativeQuery = true)
-    void eliminar(@Param("id") Integer id);
+    @Query(value = "DELETE FROM public.persona WHERE id = :id", nativeQuery = true)
+    void eliminarPersona(@Param("id") Integer id);
 }

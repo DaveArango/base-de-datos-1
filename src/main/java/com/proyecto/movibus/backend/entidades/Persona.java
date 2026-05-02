@@ -49,11 +49,9 @@ public class Persona {
     @Column(name = "estado")
     private Integer estado;
 
-    @ManyToOne
-    @JoinColumn(name="codigo_telefono", nullable = false)
-    private Telefono telefono;
+    @Column(name = "codigo_telefono")
+    private Integer telefono;
 
-    @ManyToOne
-    @JoinColumn(name="codigo_tipo_documento", nullable = false)
-    private Documento documento;
+    @Column(name = "codigo_tipo_documento")
+    private Integer documento;
 }

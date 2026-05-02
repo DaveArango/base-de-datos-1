@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonaService {
@@ -15,80 +14,52 @@ public class PersonaService {
     @Autowired
     private PersonaRepository personaRepository;
 
-    public List<Persona> listar() {
-        return personaRepository.listar();
-    }
+    public void crearPersona(Persona persona) {
 
-    public Persona buscarPorId(Integer id) {
-        return personaRepository.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
-    }
-
-    public void insertar(
-            Integer id,
-            String primerNombre,
-            String segundoNombre,
-            String primerApellido,
-            String segundoApellido,
-            LocalDate fechaNacimiento,
-            LocalDate fechaRegistro,
-            String username,
-            String password,
-            String correo,
-            Integer estado,
-            Integer codigoTelefono,
-            Integer codigoTipoDocumento
-    ) {
-        personaRepository.insertar(
-                id,
-                primerNombre,
-                segundoNombre,
-                primerApellido,
-                segundoApellido,
-                fechaNacimiento,
-                fechaRegistro,
-                username,
-                password,
-                correo,
-                estado,
-                codigoTelefono,
-                codigoTipoDocumento
+        personaRepository.insertarPersona(
+                persona.getId(),
+                persona.getPrimerNombre(),
+                persona.getSegundoNombre(),
+                persona.getPrimerApellido(),
+                persona.getSegundoApellido(),
+                persona.getFechaNacimiento(),
+                LocalDate.now(),
+                persona.getUsername(),
+                persona.getPassword(),
+                persona.getCorreo(),
+                persona.getEstado(),
+                persona.getTelefono(),
+                persona.getDocumento()
         );
     }
 
-    public void actualizar(
-            Integer id,
-            String primerNombre,
-            String segundoNombre,
-            String primerApellido,
-            String segundoApellido,
-            LocalDate fechaNacimiento,
-            LocalDate fechaRegistro,
-            String username,
-            String password,
-            String correo,
-            Integer estado,
-            Integer codigoTelefono,
-            Integer codigoTipoDocumento
-    ) {
-        personaRepository.actualizar(
-                id,
-                primerNombre,
-                segundoNombre,
-                primerApellido,
-                segundoApellido,
-                fechaNacimiento,
-                fechaRegistro,
-                username,
-                password,
-                correo,
-                estado,
-                codigoTelefono,
-                codigoTipoDocumento
+    public List<Persona> listarPersonas() {
+        return personaRepository.listarPersonas();
+    }
+
+    public Persona buscarPersona(Integer id) {
+        return personaRepository.buscarPersonaPorId(id);
+    }
+
+    public void actualizarPersona(Persona persona) {
+        personaRepository.actualizarPersona(
+                persona.getId(),
+                persona.getPrimerNombre(),
+                persona.getSegundoNombre(),
+                persona.getPrimerApellido(),
+                persona.getSegundoApellido(),
+                persona.getFechaNacimiento(),
+                persona.getFechaRegistro(),
+                persona.getUsername(),
+                persona.getPassword(),
+                persona.getCorreo(),
+                persona.getEstado(),
+                persona.getTelefono(),
+                persona.getDocumento()
         );
     }
 
-    public void eliminar(Integer id) {
-        personaRepository.eliminar(id);
+    public void eliminarPersona(Integer id) {
+        personaRepository.eliminarPersona(id);
     }
 }
