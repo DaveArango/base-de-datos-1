@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @ToString
 public class Persona {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "primer_nombre")
@@ -49,9 +48,11 @@ public class Persona {
     @Column(name = "estado")
     private Integer estado;
 
-    @Column(name = "codigo_telefono")
-    private Integer telefono;
+    @ManyToOne
+    @JoinColumn(name = "codigo_telefono")
+    private Telefono telefono;
 
-    @Column(name = "codigo_tipo_documento")
-    private Integer documento;
+    @ManyToOne
+    @JoinColumn(name = "codigo_tipo_documento")
+    private Documento documento;
 }

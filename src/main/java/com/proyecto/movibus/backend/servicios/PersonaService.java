@@ -1,11 +1,12 @@
 package com.proyecto.movibus.backend.servicios;
 
 import com.proyecto.movibus.backend.entidades.Persona;
+import com.proyecto.movibus.backend.entidades.dtos.PersonaDTO;
 import com.proyecto.movibus.backend.repositorios.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -14,51 +15,55 @@ public class PersonaService {
     @Autowired
     private PersonaRepository personaRepository;
 
-    public void crearPersona(Persona persona) {
-
-        personaRepository.insertarPersona(
-                persona.getId(),
-                persona.getPrimerNombre(),
-                persona.getSegundoNombre(),
-                persona.getPrimerApellido(),
-                persona.getSegundoApellido(),
-                persona.getFechaNacimiento(),
-                LocalDate.now(),
-                persona.getUsername(),
-                persona.getPassword(),
-                persona.getCorreo(),
-                persona.getEstado(),
-                persona.getTelefono(),
-                persona.getDocumento()
-        );
-    }
-
+    @Transactional(readOnly = true)
     public List<Persona> listarPersonas() {
         return personaRepository.listarPersonas();
     }
 
+    @Transactional(readOnly = true)
     public Persona buscarPersona(Integer id) {
         return personaRepository.buscarPersonaPorId(id);
     }
 
-    public void actualizarPersona(Persona persona) {
-        personaRepository.actualizarPersona(
-                persona.getId(),
-                persona.getPrimerNombre(),
-                persona.getSegundoNombre(),
-                persona.getPrimerApellido(),
-                persona.getSegundoApellido(),
-                persona.getFechaNacimiento(),
-                persona.getFechaRegistro(),
-                persona.getUsername(),
-                persona.getPassword(),
-                persona.getCorreo(),
-                persona.getEstado(),
-                persona.getTelefono(),
-                persona.getDocumento()
+    @Transactional
+    public void crearPersona(PersonaDTO dto) {
+        personaRepository.insertarPersona(
+                dto.getId(),
+                dto.getPrimerNombre(),
+                dto.getSegundoNombre(),
+                dto.getPrimerApellido(),
+                dto.getSegundoApellido(),
+                dto.getFechaNacimiento(),
+                dto.getFechaRegistro(),
+                dto.getUsername(),
+                dto.getPassword(),
+                dto.getCorreo(),
+                dto.getEstado(),
+                dto.getCodigoTelefono(),
+                dto.getCodigoDocumento()
         );
     }
 
+    @Transactional
+    public void actualizarPersona(PersonaDTO dto) {
+        personaRepository.actualizarPersona(
+                dto.getId(),
+                dto.getPrimerNombre(),
+                dto.getSegundoNombre(),
+                dto.getPrimerApellido(),
+                dto.getSegundoApellido(),
+                dto.getFechaNacimiento(),
+                dto.getFechaRegistro(),
+                dto.getUsername(),
+                dto.getPassword(),
+                dto.getCorreo(),
+                dto.getEstado(),
+                dto.getCodigoTelefono(),
+                dto.getCodigoDocumento()
+        );
+    }
+
+    @Transactional
     public void eliminarPersona(Integer id) {
         personaRepository.eliminarPersona(id);
     }

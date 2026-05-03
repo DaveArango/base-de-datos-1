@@ -1,9 +1,9 @@
 package com.proyecto.movibus.backend.controladores;
 
-import com.proyecto.movibus.backend.entidades.Persona;
-import com.proyecto.movibus.backend.entidades.dtos.PersonaDTO;
-import com.proyecto.movibus.backend.repositorios.PersonaRepository;
-import com.proyecto.movibus.backend.servicios.PersonaService;
+import com.proyecto.movibus.backend.entidades.Pasajero;
+import com.proyecto.movibus.backend.entidades.dtos.PasajeroDTO;
+import com.proyecto.movibus.backend.repositorios.PasajeroRepository;
+import com.proyecto.movibus.backend.servicios.PasajeroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/personas")
-public class PersonaController {
+@RequestMapping("/pasajeros")
+public class PasajeroController {
 
     @Autowired
-    private PersonaService personaService;
+    private PasajeroService pasajeroService;
 
     @Autowired
-    private PersonaRepository personaRepository;
+    private PasajeroRepository pasajeroRepository;
 
     @GetMapping
     public ResponseEntity<?> listar() {
         try {
-            return ResponseEntity.ok(personaService.listarPersonas());
+            return ResponseEntity.ok(pasajeroService.listarPasajeros());
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -35,14 +35,14 @@ public class PersonaController {
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id) {
         try {
-            Persona persona = personaService.buscarPersona(id);
-            if (persona == null) {
+            Pasajero pasajero = pasajeroService.buscarPasajero(id);
+            if (pasajero == null) {
                 return ResponseEntity
                         .status(HttpStatus.NOT_FOUND)
                         .body(Map.of("error",
-                                "Persona no encontrada"));
+                                "Pasajero no encontrado"));
             }
-            return ResponseEntity.ok(persona);
+            return ResponseEntity.ok(pasajero);
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -51,19 +51,19 @@ public class PersonaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> insertar(@RequestBody PersonaDTO dto) {
+    public ResponseEntity<?> insertar(@RequestBody PasajeroDTO dto) {
         try {
-            if (dto.getId() != null && personaRepository.existsById(dto.getId())) {
+            if (pasajeroRepository.existsById(dto.getId())) {
                 return ResponseEntity
                         .status(HttpStatus.BAD_REQUEST)
                         .body(Map.of("error",
-                                "La persona ya existe"));
+                                "El pasajero ya existe"));
             }
-            personaService.crearPersona(dto);
+            pasajeroService.crearPasajero(dto);
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .body(Map.of("mensaje",
-                            "Persona insertada correctamente"));
+                            "Pasajero insertado correctamente"));
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -72,17 +72,17 @@ public class PersonaController {
     }
 
     @PutMapping
-    public ResponseEntity<?> actualizar(@RequestBody PersonaDTO dto) {
+    public ResponseEntity<?> actualizar(@RequestBody PasajeroDTO dto) {
         try {
-            if (!personaRepository.existsById(dto.getId())) {
+            if (!pasajeroRepository.existsById(dto.getId())) {
                 return ResponseEntity
                         .status(HttpStatus.NOT_FOUND)
                         .body(Map.of("error",
-                                "Persona no encontrada"));
+                                "Pasajero no encontrado"));
             }
-            personaService.actualizarPersona(dto);
+            pasajeroService.actualizarPasajero(dto);
             return ResponseEntity.ok(Map.of("mensaje",
-                    "Persona actualizada correctamente"));
+                    "Pasajero actualizado correctamente"));
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -93,15 +93,15 @@ public class PersonaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminar(@PathVariable Integer id) {
         try {
-            if (!personaRepository.existsById(id)) {
+            if (!pasajeroRepository.existsById(id)) {
                 return ResponseEntity
                         .status(HttpStatus.NOT_FOUND)
                         .body(Map.of("error",
-                                "Persona no encontrada"));
+                                "Pasajero no encontrado"));
             }
-            personaService.eliminarPersona(id);
+            pasajeroService.eliminarPasajero(id);
             return ResponseEntity.ok(Map.of("mensaje",
-                    "Persona eliminada correctamente"));
+                    "Pasajero eliminado correctamente"));
         } catch (Exception e) {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
