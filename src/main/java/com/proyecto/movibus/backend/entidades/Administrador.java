@@ -1,5 +1,6 @@
 package com.proyecto.movibus.backend.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,5 +35,6 @@ public class Administrador {
             joinColumns = @JoinColumn(name = "codigo_administrador"),
             inverseJoinColumns = @JoinColumn(name = "codigo_reporte")
     )
+    @JsonIgnore
     private Set<Reporte> reportes;
 }

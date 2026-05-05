@@ -1,5 +1,6 @@
 package com.proyecto.movibus.backend.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,5 +36,6 @@ public class Conductor {
             joinColumns = @JoinColumn(name = "id_conductor"),
             inverseJoinColumns = @JoinColumn(name = "id_notificacion")
     )
+    @JsonIgnore
     private Set<Notificacion> notificaciones;
 }

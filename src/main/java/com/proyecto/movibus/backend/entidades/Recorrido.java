@@ -1,5 +1,6 @@
 package com.proyecto.movibus.backend.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,5 +39,6 @@ public class Recorrido {
             joinColumns = @JoinColumn(name = "id_recorrido"),
             inverseJoinColumns = @JoinColumn(name = "codigo_vehiculo")
     )
+    @JsonIgnore
     private Set<Vehiculo> vehiculos;
 }
