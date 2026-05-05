@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
-public class Ubicacion_Recorrido {
+public class UbicacionRecorrido {
     @Id
     private Integer id;
 

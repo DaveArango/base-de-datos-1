@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -31,7 +30,7 @@ public class Recorrido {
 
     @ManyToOne
     @JoinColumn(name = "id_ubicacion_recorrido", nullable = false)
-    private Ubicacion_Recorrido ubicacionRecorrido;
+    private UbicacionRecorrido ubicacionRecorrido;
 
     @ManyToMany
     @JoinTable(
