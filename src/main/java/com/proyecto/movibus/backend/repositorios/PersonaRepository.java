@@ -64,15 +64,12 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
             @Param("codigoTipoDocumento") Integer codigoTipoDocumento
     );
 
-    // READ ALL
     @Query(value = "SELECT * FROM public.persona", nativeQuery = true)
     List<Persona> listarPersonas();
 
-    // READ BY ID
     @Query(value = "SELECT * FROM public.persona WHERE id = :id", nativeQuery = true)
     Persona buscarPersonaPorId(@Param("id") Integer id);
 
-    // UPDATE
     @Modifying
     @Transactional
     @Query(value = """
@@ -108,7 +105,6 @@ public interface PersonaRepository extends JpaRepository<Persona, Integer> {
             @Param("codigoTipoDocumento") Integer codigoTipoDocumento
     );
 
-    // DELETE
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM public.persona WHERE id = :id", nativeQuery = true)
