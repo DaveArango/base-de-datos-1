@@ -93,8 +93,9 @@ export const tablasConfig = {
         label: 'ESTADO',
         tipo: 'select',
         opciones: [
-          { value: 1, label: 'Activo' },
-          { value: 2, label: 'Finalizado' }
+          { value: 1, label: 'Reportado' },
+          { value: 2, label: 'En Proceso' },
+          { value: 3, label: 'Resuelto' }
 
         ],
         aplanar: (i) => i._estado_txt || '—'
